@@ -1,86 +1,147 @@
 import { Link } from 'react-router-dom'
 import { BeforeAfter } from '../components/BeforeAfter'
-import { shop, services } from '../data/shop'
-
-const highlights = services.filter((s) =>
-  ['shellac-mani', 'shellac-pedi', 'combo-shellac', 'lash-hybrid', 'biogel-full'].includes(s.id),
-)
+import { HorizontalServices } from '../components/HorizontalServices'
+import { Marquee } from '../components/Marquee'
+import { shop, promises, reviews, gallery } from '../data/shop'
 
 export function Home() {
   return (
     <>
-      <section className="section" style={{ paddingTop: '3rem' }}>
-        <div className="container" style={{ display: 'grid', gap: '2.5rem' }}>
-          <div>
-            <p className="eyebrow">Hannon · Rymal Rd E</p>
-            <h1 className="display h1">Pretty nails. Soft spa energy. Easy booking.</h1>
-            <p className="lede" style={{ marginTop: '1rem' }}>
-              Beau More Nails & Spa — bio gel, acrylic, shellac, pedis, lashes, wax. Found you on
-              Instagram {shop.ig}. This demo shows how charming the brand can feel online.
-            </p>
-            <div className="btn-row">
-              <Link to="/book" className="btn">
-                Book a seat
-              </Link>
-              <Link to="/gallery" className="btn btn-ghost">
-                See the glow-up
-              </Link>
+      <section className="container hero">
+        <div>
+          <p className="eyebrow">Beau More · Hannon / Hamilton</p>
+          <h1 className="display h1">
+            Soft glam nails.
+            <br />
+            <em>Hard-to-forget</em> finish.
+          </h1>
+          <p className="lede" style={{ marginTop: '1.1rem' }}>
+            Bio gel, acrylic, shellac, pedis, lashes, wax — full spa menu on Rymal Rd E.
+            Pretty enough to book. Clear enough to stop guessing in DMs.
+          </p>
+          <div className="btn-row">
+            <Link to="/book" className="btn">
+              Book a seat
+            </Link>
+            <Link to="/services" className="btn btn-ghost">
+              Explore services
+            </Link>
+          </div>
+          <div className="hero-stats">
+            <div>
+              <strong>30+</strong>
+              <span>Services</span>
+            </div>
+            <div>
+              <strong>7</strong>
+              <span>Days open</span>
+            </div>
+            <div>
+              <strong>IG</strong>
+              <span>{shop.ig}</span>
             </div>
           </div>
-
-          <div>
-            <p className="eyebrow">Scroll controlled</p>
-            <h2 className="display h2">Before → after as you scroll</h2>
-            <p className="muted" style={{ margin: '0.5rem 0 1rem' }}>
-              Drag the handle too — same move as our Glorious Nails winner.
-            </p>
-            <BeforeAfter />
+        </div>
+        <div className="hero-visual">
+          <div className="hero-frame">
+            <img
+              src="https://images.pexels.com/photos/34885844/pexels-photo-34885844.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Beau More nail art"
+            />
+          </div>
+          <div className="hero-float">
+            <strong>Shellac from $40</strong>
+            <span className="muted">Mani · pedi · combos · lashes</span>
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ background: '#fff', borderBlock: '1px solid var(--line)' }}>
-        <div className="container">
-          <p className="eyebrow">Most booked</p>
-          <h2 className="display h2">Menu highlights</h2>
-          <div style={{ marginTop: '1.5rem' }}>
-            {highlights.map((s) => (
-              <div key={s.id} className="service-row">
-                <div>
-                  <strong>{s.name}</strong>
-                  <p className="muted" style={{ margin: '0.2rem 0 0' }}>
-                    {s.blurb} · {s.duration} min
-                  </p>
-                </div>
-                <span className="price">${s.price}</span>
-              </div>
-            ))}
+      <Marquee />
+
+      <HorizontalServices />
+
+      <section className="section">
+        <div className="container" style={{ display: 'grid', gap: '2rem' }}>
+          <div style={{ maxWidth: '40rem' }}>
+            <p className="eyebrow">Transformation</p>
+            <h2 className="display h2">
+              Scroll the <em>before → after</em>
+            </h2>
+            <p className="lede" style={{ marginTop: '0.65rem' }}>
+              Handle follows your scroll — or drag it. Same energy as our Glorious Nails
+              winner.
+            </p>
           </div>
-          <div className="btn-row">
-            <Link to="/services" className="btn btn-ghost">
-              Full menu
+          <div style={{ display: 'grid', gap: '1.5rem' }}>
+            <BeforeAfter />
+            <div className="gallery-grid">
+              {gallery.slice(0, 4).map((g) => (
+                <figure key={g.src} className={g.tall ? 'tall' : undefined}>
+                  <img src={g.src} alt={g.alt} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+            <Link to="/gallery" className="btn btn-ghost" style={{ width: 'fit-content' }}>
+              Full gallery
             </Link>
-            <a className="btn" href={shop.setmore} target="_blank" rel="noreferrer">
-              Open Setmore
-            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: 'rgba(255,255,255,0.55)', borderBlock: '1px solid var(--line)' }}>
+        <div className="container">
+          <p className="eyebrow">Why Beau More</p>
+          <h2 className="display h2">More than polish.</h2>
+          <div className="promise-grid" style={{ marginTop: '1.75rem' }}>
+            {promises.map((p) => (
+              <article key={p.num} className="promise">
+                <div className="num">{p.num}</div>
+                <h3>{p.title}</h3>
+                <p className="muted">{p.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="section">
-        <div className="container" style={{ textAlign: 'center' }}>
-          <p className="eyebrow">Ready</p>
-          <h2 className="display h2">Stop losing bookings to DMs alone.</h2>
-          <p className="lede" style={{ margin: '0.75rem auto' }}>
-            Pretty site + clear book button. Clients stop guessing.
-          </p>
-          <div className="btn-row" style={{ justifyContent: 'center' }}>
-            <Link to="/book" className="btn">
-              Try booking demo
-            </Link>
-            <Link to="/contact" className="btn btn-ghost">
-              Visit info
-            </Link>
+        <div className="container">
+          <p className="eyebrow">Love notes</p>
+          <h2 className="display h2">What guests say</h2>
+          <div className="review-grid" style={{ marginTop: '1.5rem' }}>
+            {reviews.map((r) => (
+              <blockquote key={r.name} className="review">
+                <div className="stars">★★★★★</div>
+                <p>“{r.text}”</p>
+                <cite className="muted" style={{ fontStyle: 'normal', fontWeight: 650 }}>
+                  {r.name}
+                </cite>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-tight">
+        <div className="container">
+          <div className="cta-band">
+            <p className="eyebrow">Visit</p>
+            <h2 className="display h2">
+              {shop.address}
+              <br />
+              <em>{shop.city}</em>
+            </h2>
+            <p className="lede" style={{ marginTop: '0.75rem' }}>
+              Call {shop.phone} · {shop.ig} · open 7 days
+            </p>
+            <div className="btn-row">
+              <Link to="/book" className="btn">
+                Book online
+              </Link>
+              <Link to="/contact" className="btn btn-ghost">
+                Hours & map
+              </Link>
+            </div>
           </div>
         </div>
       </section>
