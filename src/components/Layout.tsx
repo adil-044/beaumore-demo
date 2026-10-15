@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
 import { navLinks, shop } from '../data/shop'
 import { useLenis } from '../hooks/useLenis'
+import { SalesPitch } from './SalesPitch'
 
 export function Layout() {
   const [open, setOpen] = useState(false)
@@ -51,6 +52,7 @@ export function Layout() {
       <main className="main">
         <Outlet />
       </main>
+      <SalesPitch />
       <footer className="footer">
         <div className="container footer-grid">
           <div>
